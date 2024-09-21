@@ -1,17 +1,18 @@
 const rls = require('readline-sync');
-const RotEncoder = require('./rotEncoder');
-const SbsEncoder = require('./sbsEncoder');
+const RotEncoder = require('./RotEncoder');
+const SbsEncoder = require('./SbsEncoder');
 
 function main() {
     const [operation, encoderType, key] = process.argv.slice(2);
 
     let encoder;
 
-    switch (encoderType) {
-        case 'RotEncoder':
+    // Instantiate the correct encoder based on command-line arguments
+    switch (encoderType.toLowerCase()) {
+        case 'rotencoder':
             encoder = new RotEncoder(key);
             break;
-        case 'SbsEncoder':
+        case 'sbsencoder':
             encoder = new SbsEncoder(key);
             break;
         default:
@@ -19,6 +20,7 @@ function main() {
             return;
     }
 
+    // Perform encoding or decoding based on the operation
     if (operation === 'E') {
         while (true) {
             const line = rls.question('');
