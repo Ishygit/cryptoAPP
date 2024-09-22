@@ -1,6 +1,6 @@
 class RotEncoder {
    constructor(key) {
-       // Parse the key for rotation
+       // Parse the key for rotation in the constructor
        this.key = parseInt(key, 10);
    }
 
@@ -14,10 +14,12 @@ class RotEncoder {
        return str.split('').map(char => this._shift(char, -this.key)).join('');
    }
 
-   // Shifts characters based on the key and handles case sensitivity
+   // Shifts characters based on the key, using regular expressions for case detection
    _shift(char, shiftAmount) {
-       const isUpperCase = char === char.toUpperCase() && /[A-Z]/.test(char);
-       const isLowerCase = char === char.toLowerCase() && /[a-z]/.test(char);
+       // Check if character is uppercase using regex
+       const isUpperCase = /[A-Z]/.test(char);
+       // Check if character is lowercase using regex
+       const isLowerCase = /[a-z]/.test(char);
 
        if (isUpperCase) {
            return String.fromCharCode((char.charCodeAt(0) - 65 + shiftAmount + 26) % 26 + 65);
