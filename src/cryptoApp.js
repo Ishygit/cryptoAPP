@@ -7,7 +7,7 @@ function main() {
 
     let encoder;
 
-    // Instantiate the correct encoder based on command-line arguments
+    // instantiating the correct encoder based on command-line arguments
     switch (encoderType.toLowerCase()) {
         case 'rotencoder':
             encoder = new RotEncoder(key);

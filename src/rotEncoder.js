@@ -13,6 +13,7 @@ RotEncoder.prototype.decode = function(str) {
    return str.split('').map(char => this._shift(char, -this.key)).join('');
 };
 
+// Helper function to shift characters based on the key
 RotEncoder.prototype._shift = function(char, shiftAmount) {
    // Check if character is uppercase or lowercase using regEx
    const isUpperCase = /[A-Z]/.test(char);
@@ -27,5 +28,5 @@ RotEncoder.prototype._shift = function(char, shiftAmount) {
    return char;
 };
 
-// Export the RotEncoder class
+// Export using Node.js common module system
 module.exports = RotEncoder;
