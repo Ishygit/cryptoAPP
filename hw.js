@@ -6,8 +6,10 @@
 // const foo = new String ('foo');
 // console.log(foo);
 // console.log(typeof foo);
-String.prototype.printUpperCase = function() {
-    console.log(this.toUpperCase());
-}
-'hello'.printUpperCase();
+// String.prototype.printUpperCase = function() {
+//     console.log(this.toUpperCase());
+// }
+// 'hello'.printUpperCase();
 // s.prototype.toUpperCase.call(String());
+names = ['Asabeneh', 'Mathias', 'Elias', 'Brook'];
+names.filter(name => name.length > 5).sort().forEach(name => console.log(name.toUpperCase()));
