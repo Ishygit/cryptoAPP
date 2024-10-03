@@ -11,5 +11,11 @@
 // }
 // 'hello'.printUpperCase();
 // s.prototype.toUpperCase.call(String());
-names = ['Asabeneh', 'Mathias', 'Elias', 'Brook'];
-names.filter(name => name.length > 5).sort().forEach(name => console.log(name.toUpperCase()));
+// names = ['Asabeneh', 'Mathias', 'Elias', 'Brook'];
+// names.filter(name => name.length > 5).sort().forEach(name => console.log(name.toUpperCase()));
+if (x)
+    z = x.y;
+else
+    z = x;
+//rewrite a single assignment that has the same effect as this code, without using any [] operator
+z = x && x.y;
