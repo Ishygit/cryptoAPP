@@ -96,3 +96,31 @@ class SbsEncoder {
       console.log(err);
    }
 })();
+
+
+
+// **********************************************I
+// Map to track frequency of letters
+// const clearFrequency = new Map();
+// const cipherFrequency = new Map();
+
+// for (let i = 0; i < 26; i++) {
+//     const clearLetter = clear[i];
+//     const cipherLetter = cipher[i];
+
+//     // Update frequency map for clear letters
+//     if (clearFrequency.has(clearLetter)) {
+//         console.log(`Repeated letter in Clear key: ${clearLetter}`);
+//         throw 'Repeated letter in Clear key';
+//     } else {
+//         clearFrequency.set(clearLetter, 1);
+//     }
+ 
+//     // Update frequency map for cipher letters
+//     if (cipherFrequency.has(cipherLetter)) {
+//         console.log(`Repeated letter in Cipher key: ${cipherLetter}`);
+//         throw 'Repeated letter in Cipher key';
+//     } else {
+//         cipherFrequency.set(cipherLetter, 1);
+//     }
+//    }

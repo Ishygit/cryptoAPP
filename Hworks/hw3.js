@@ -25,15 +25,18 @@ const regexSameFirstLast = /^(\w+)\s+(\w+\s+)*\1$/;    // Matches strings where 
 
 // Function to categorize the string based on the regular expressions
 function categorizeString(s) {
+    const categories = [];
+    
     if (regexTwoX.test(s)) {
-        return 'Category 1: Exactly two instances of X';
-    } else if (regexSpaceWords.test(s)) {
-        return 'Category 2: Two or more space-separated words';
-    } else if (regexSameFirstLast.test(s)) {
-        return 'Category 3: First and last word are the same';
-    } else {
-        return 'None';
+        categories.push('Category 1: Exactly two instances of X');
     }
+    if (regexSpaceWords.test(s)) {
+        categories.push('Category 2: Two or more space-separated words');
+    }
+    if (regexSameFirstLast.test(s)) {
+        categories.push('Category 3: First and last word are the same');
+    }
+    return categories.length > 0 ? categories : ['None'];
 }
 
 // Array of test strings
@@ -53,11 +56,13 @@ const testStrings = [
     "    ",                // None (only spaces)
     
     // Tests for third regular expression (First and last word are the same)
-    "hello world hello",   // Matches
+    "hXllX world hXllX",   // Matches
+    "hello world hello",
     "test test",           // Matches
     "abc def ghi abc",     // Matches
     "hi there",            // None
     "first last",          // None
+
     
     // Additional creative and varied tests
     "XooXoo",              // Matches (Category 1)
@@ -71,6 +76,9 @@ const testStrings = [
     "end end",             // Matches (Category 3)
     "another test string"  // Matches (Category 2)
 ];
+
+//takes user input of test strings and stores them in an array 
+// const testStrings = [] 
 
 // Process each test string and output the result
 testStrings.forEach(s => {
