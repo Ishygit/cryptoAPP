@@ -22,15 +22,11 @@ function main() {
 
     // Perform encoding or decoding based on the operation
     if (operation === 'E') {
-        while (true) {
-            const line = rls.question('');
-            if (!line) break;
+        while (line = rls.question()) {
             console.log(encoder.encode(line));
         }
     } else if (operation === 'D') {
-        while (true) {
-            const line = rls.question('');
-            if (!line) break;
+        while (line = rls.question()) {
             console.log(encoder.decode(line));
         }
     } else {

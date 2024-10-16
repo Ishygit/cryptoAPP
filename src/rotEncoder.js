@@ -3,6 +3,11 @@ function RotEncoder(key) {
    this.key = parseInt(key, 10);
 }
 
+// Constants for character ranges
+const UPPER_A = 'A'.charCodeAt(0);
+const LOWER_A = 'a'.charCodeAt(0);
+const MAXCHAR = 26;
+
 // Encodes the input string by shifting each character
 RotEncoder.prototype.encode = function(str) {
    return str.split('').map(char => this._shift(char, this.key)).join('');
@@ -15,14 +20,16 @@ RotEncoder.prototype.decode = function(str) {
 
 // Helper function to shift characters based on the key
 RotEncoder.prototype._shift = function(char, shiftAmount) {
-   // Check if character is uppercase or lowercase using regEx
+   const charCode = char.charCodeAt(0);
+
+   // Check if character is uppercase or lowercase using regex
    const isUpperCase = /[A-Z]/.test(char);
    const isLowerCase = /[a-z]/.test(char);
 
    if (isUpperCase) {
-       return String.fromCharCode((char.charCodeAt(0) - 65 + shiftAmount + 26) % 26 + 65);
+       return String.fromCharCode(((charCode - UPPER_A + shiftAmount + MAXCHAR) % MAXCHAR) + UPPER_A);
    } else if (isLowerCase) {
-       return String.fromCharCode((char.charCodeAt(0) - 97 + shiftAmount + 26) % 26 + 97);
+       return String.fromCharCode(((charCode - LOWER_A + shiftAmount + MAXCHAR) % MAXCHAR) + LOWER_A);
    }
    // Non-alphabetic characters remain unchanged
    return char;
