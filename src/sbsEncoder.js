@@ -1,5 +1,5 @@
 function SbsEncoder(key) {
-   // Process the key into a map for fast lookups in the constructor
+   // Process the key into a map for lookups in the constructor
    this.map = this._createMap(key);
    this.reverseMap = this._createReverseMap(this.map);  // For decoding
 }
@@ -14,18 +14,18 @@ SbsEncoder.prototype.decode = function(str) {
    return str.split('').map(char => this.reverseMap[char] || char).join('');
 };
 
-// Creates a map from the key for substitution using split and regular expressions
+//Creates map from the key for substitution using split and regex
 SbsEncoder.prototype._createMap = function(key) {
    const map = {};
    key.split(',').forEach(pair => {
+      if(pair.length !== 2 || !/^[a-zA-Z]{2}$/.test(pair)){
+         throw `Bad code pair: ${pair}`;
+      }
        const [from, to] = pair.split('');  // Split the pair into two characters
-       if (from && to) {
-           // Add to map both lowercase and uppercase transformations
-           map[from] = to;
-           if (/[a-z]/.test(from)) { 
-               map[from.toUpperCase()] = to.toUpperCase();
-           }
-       }
+       map[from] = to;
+       if (/[A-Z]/.test(from)) {
+           map[from.toUpperCase()] = to.toUpperCase();
+      }
    });
    return map;
 };

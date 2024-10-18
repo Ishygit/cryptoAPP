@@ -20,7 +20,7 @@ class SbsEncoder {
       const sections = key.split('-');
 
       if (sections.length !== 2){
-         throw 'Bad key format';
+         throw `Bad key format ${key}`;
       }
       
       const clear = sections[0];
@@ -32,16 +32,22 @@ class SbsEncoder {
       const clearSet = new Set(clear);
       const cipherSet = new Set(cipher);
 
-      //print the letter that is repeated
-      if (clearSet.size !== 26)
-         throw 'Repeated letter in Clear key'
+      for (let j = 0; j < 26; j++){
+         const clearRep = clear[j];
+         const cipherRep = cipher[j];
 
-      if (cipherSet.size !== 26)
-         throw 'Repeated letter in Cipher key'
+         //print the letter that is repeated
+         if (clearSet.size !== 26 || clearSet.has(clearRep))
+            throw `Repeated letter in Clear key: ${clearRep}`
 
-      //map for both cases of letters
-      this.encodeMap = {};
-      this.decodeMap = {};
+         if (cipherSet.size !== 26 || cipherSet.has(c))
+            throw `Repeated letter in Cipher key: ${cipherRep}`
+
+         //map for both cases of letters
+         this.encodeMap = {};
+         this.decodeMap = {};
+      }
+      
 
       for (let i = 0; i < 26; i++){
          const clearLetter = clear[i];
@@ -97,30 +103,3 @@ class SbsEncoder {
    }
 })();
 
-
-
-// **********************************************I
-// Map to track frequency of letters
-// const clearFrequency = new Map();
-// const cipherFrequency = new Map();
-
-// for (let i = 0; i < 26; i++) {
-//     const clearLetter = clear[i];
-//     const cipherLetter = cipher[i];
-
-//     // Update frequency map for clear letters
-//     if (clearFrequency.has(clearLetter)) {
-//         console.log(`Repeated letter in Clear key: ${clearLetter}`);
-//         throw 'Repeated letter in Clear key';
-//     } else {
-//         clearFrequency.set(clearLetter, 1);
-//     }
- 
-//     // Update frequency map for cipher letters
-//     if (cipherFrequency.has(cipherLetter)) {
-//         console.log(`Repeated letter in Cipher key: ${cipherLetter}`);
-//         throw 'Repeated letter in Cipher key';
-//     } else {
-//         cipherFrequency.set(cipherLetter, 1);
-//     }
-//    }

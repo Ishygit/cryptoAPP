@@ -1,6 +1,11 @@
 function RotEncoder(key) {
    // Parse the key for rotation in the constructor
-   this.key = parseInt(key, 10);
+   const offset = parseInt(key, 10);
+   if(isNaN(offset) || offset <= 0){
+      throw `Bad offset ${key}`;
+   }
+
+   this.key = offset;
 }
 
 // Constants for character ranges
@@ -27,9 +32,11 @@ RotEncoder.prototype._shift = function(char, shiftAmount) {
    const isLowerCase = /[a-z]/.test(char);
 
    if (isUpperCase) {
-       return String.fromCharCode(((charCode - UPPER_A + shiftAmount + MAXCHAR) % MAXCHAR) + UPPER_A);
+      return String.fromCharCode(((charCode - UPPER_A + shiftAmount + MAXCHAR) 
+       % MAXCHAR) + UPPER_A);
    } else if (isLowerCase) {
-       return String.fromCharCode(((charCode - LOWER_A + shiftAmount + MAXCHAR) % MAXCHAR) + LOWER_A);
+      return String.fromCharCode(((charCode - LOWER_A + shiftAmount + MAXCHAR) 
+       % MAXCHAR) + LOWER_A);
    }
    // Non-alphabetic characters remain unchanged
    return char;

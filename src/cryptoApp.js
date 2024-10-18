@@ -3,8 +3,14 @@ const RotEncoder = require('./RotEncoder');
 const SbsEncoder = require('./SbsEncoder');
 
 function main() {
-    const [operation, encoderType, key] = process.argv.slice(2);
-
+   try{
+      const args = process.argv.slice(2)
+      if (args.length !== 3){
+         throw `Usage: crypto algorithm key`
+      } 
+   
+    const [operation, encoderType, key] = args;
+    
     let encoder;
 
     // instantiating the correct encoder based on command-line arguments
@@ -16,8 +22,7 @@ function main() {
             encoder = new SbsEncoder(key);
             break;
         default:
-            console.error('Unknown encoder type');
-            return;
+            throw `Unknown encoder type: ${encoderType}`;
     }
 
     // Perform encoding or decoding based on the operation
@@ -30,8 +35,11 @@ function main() {
             console.log(encoder.decode(line));
         }
     } else {
-        console.error('Invalid operation. Use E for Encode or D for Decode.');
+        throw'Invalid operation. Use E for Encode or D for Decode.';
     }
+   } catch (error) {
+      console.log(error) //catch and display any thrown error
+   }
 }
 
 main();
