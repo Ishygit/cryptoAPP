@@ -250,50 +250,105 @@
 
 // ********************************************************************
 // Question 18
+// (() => {
+//    let oldArr = [];
+//    let newArr = new Int32Array(50000000);
+
+//    // Ensure length of 50,000,000 for oldArr
+//    oldArr[49999999] = 42; 
+
+//    console.log(`Testing oldArr of length ${oldArr.length}`);
+   
+//    console.time("oldArrTime");  // Start timing for oldArr
+//    testArr(oldArr);  // Run the test on the regular array
+//    console.timeEnd("oldArrTime");  // End timing and print time taken
+
+//    console.log("Done with oldArr");
+
+//    console.log(`Testing newArr of length ${newArr.length}`);
+   
+//    console.time("newArrTime");  // Start timing for newArr
+//    testArr(newArr);  // Run the test on the typed array
+//    console.timeEnd("newArrTime");  // End timing and print time taken
+
+//    console.log("Done with newArr");
+// })();
+
+// function testArr(arr) {
+//    // Fill the array with values from 1 to arr.length
+//    for (let i = 0; i < arr.length; i++) {
+//       arr[i] = i + 1;
+//    }
+
+//    // Reverse the array by flipping elements end for end
+//    let mid = Math.floor(arr.length / 2);
+//    for (let i = 0; i < mid; i++) {
+//       let temp = arr[i];
+//       arr[i] = arr[arr.length - 1 - i];
+//       arr[arr.length - 1 - i] = temp;
+//    }
+
+//    // Verify that the array is reversed
+//    for (let i = 0; i < arr.length; i++) {
+//       if (arr[i] !== arr.length - i) {
+//          console.error(`Error: arr[${i}] = ${arr[i]}, but expected ${arr.length - i}`);
+//          return;
+//       }
+//    }
+//    console.log("Array test passed");
+// }
+
+// *****************************************
+// question 12
+// (() => {
+//    try { 
+//       let x = [{}, {}];
+
+//       x.forEach(val => val.notThere());
+
+//    } 
+//    catch (err) {
+      
+//    }
+// })()
+
 (() => {
-   let oldArr = [];
-   let newArr = new Int32Array(50000000);
+   try { 
+       let x = [{}, {}];
+       x.forEach(val => val.notThere());
+   } 
+   catch (err) {
+       // Print the stack trace
+       console.log('Stack Trace:');
+       console.log(err.stack);
 
-   // Ensure length of 50,000,000 for oldArr
-   oldArr[49999999] = 42; 
+       // Analyze the stack trace
+       let stackLines = err.stack.split('\n'); // Split stack trace into lines
 
-   console.log(`Testing oldArr of length ${oldArr.length}`);
-   
-   console.time("oldArrTime");  // Start timing for oldArr
-   testArr(oldArr);  // Run the test on the regular array
-   console.timeEnd("oldArrTime");  // End timing and print time taken
+       // Display the number of stack frames
+       console.log(`Number of stack frames: ${stackLines.length - 1}`); // First line is the error message
 
-   console.log("Done with oldArr");
+       // Analyze stack frames
+       let recognizedFrames = stackLines.filter(line => 
+           line.includes('forEach') || line.includes('<anonymous>') || line.includes('Array')
+       );
 
-   console.log(`Testing newArr of length ${newArr.length}`);
-   
-   console.time("newArrTime");  // Start timing for newArr
-   testArr(newArr);  // Run the test on the typed array
-   console.timeEnd("newArrTime");  // End timing and print time taken
+       console.log(`Recognized stack frames: ${recognizedFrames.length}`);
+       recognizedFrames.forEach((line, index) => {
+           console.log(`Recognized frame ${index + 1}: ${line}`);
+       });
 
-   console.log("Done with newArr");
+       // Check if any frames are called from the same line
+       let lineNumbers = recognizedFrames.map(line => line.match(/:(\d+):(\d+)/)).filter(match => match !== null);
+       let duplicates = lineNumbers.filter((v, i, arr) => arr.findIndex(t => t[1] === v[1] && t[2] === v[2]) !== i);
+
+       if (duplicates.length > 0) {
+           console.log(`Frames called from the same line:`);
+           duplicates.forEach((dup, index) => {
+               console.log(`Duplicate ${index + 1}: Line ${dup[1]}:${dup[2]}`);
+           });
+       } else {
+           console.log('No frames were called from the same line.');
+       }
+   }
 })();
-
-function testArr(arr) {
-   // Fill the array with values from 1 to arr.length
-   for (let i = 0; i < arr.length; i++) {
-      arr[i] = i + 1;
-   }
-
-   // Reverse the array by flipping elements end for end
-   let mid = Math.floor(arr.length / 2);
-   for (let i = 0; i < mid; i++) {
-      let temp = arr[i];
-      arr[i] = arr[arr.length - 1 - i];
-      arr[arr.length - 1 - i] = temp;
-   }
-
-   // Verify that the array is reversed
-   for (let i = 0; i < arr.length; i++) {
-      if (arr[i] !== arr.length - i) {
-         console.error(`Error: arr[${i}] = ${arr[i]}, but expected ${arr.length - i}`);
-         return;
-      }
-   }
-   console.log("Array test passed");
-}
